@@ -1,0 +1,37 @@
+name: Research task
+description: Define a bounded research or infrastructure task with evidence and acceptance criteria.
+title: '[Research] '
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Research question and intended result
+      description: State the concrete result or behavior this task should establish.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Primary evidence and baseline
+      description: Paper identifier/version, official code commit, current project commit, or infrastructure requirements.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and data boundaries
+      description: Files/components to change; algorithmic adaptations; protected datasets and local user work.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Acceptance criteria and validation
+      description: Observable pass/fail conditions, proposed commands, resource budget and execution permissions.
+    validations:
+      required: true
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Dependencies and unresolved evidence
+      description: Missing sources, dataset access, GPU/hardware availability or required decisions.
