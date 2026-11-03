@@ -28,6 +28,15 @@
 不生成自动覆盖脚本，不安装全局配置，不增加平台服务。
 中央原生 Skill 和 agent 文件是维护源；项目副本通过 PR 更新。
 
+客户端必须信任实际 Git 根目录，才能原生发现项目角色。父目录或旧部署目录
+的信任记录不能代替新仓库根目录。首次从项目根启动客户端时完成信任确认；
+隔离审核也可由用户选择 `templates/user/lab-review.config.toml` 的 opt-in profile。
+它需要复制到用户配置目录并替换路径，不自动安装，也不把本机信任写进项目。
+
+CLI 0.166.0 实测受信任项目可直接发现 standalone TOML，不必为此强加项目
+`.codex/config.toml`。显式 `[agents.<name>].config_file` 是另一条可用注册路径，
+若采用则合并已有配置，不覆盖用户或项目原配置。详见 [原生加载说明](codex-setup.md)。
+
 ## Diffusion Policy 测试接入
 
 官方来源为 [real-stanford/diffusion_policy](https://github.com/real-stanford/diffusion_policy)。
