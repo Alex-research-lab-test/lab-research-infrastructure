@@ -32,7 +32,7 @@ consumer's core algorithm, upgrade its training environment, or execute hardware
 ## Automatic review
 
 Use the central `research-reproduction` Skill for research collaboration
-maintenance as well as reproduction work. The main agent selects L0/L1/L2 from
+maintenance and all research task types. The main agent selects L0/L1/L2 from
 the task, actual diff and scientific risk: L0 format checks only, L1 native
 `code_reviewer`, L2 independent native scientific and code reviewers. Unknown
 scientific impact raises to L2. Record reasons, fixed SHA, native role/thread

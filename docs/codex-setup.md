@@ -3,7 +3,7 @@
 ## 项目本地发现
 
 项目 `AGENTS.md` 提供操作规则；`.agents/skills/research-reproduction/SKILL.md`
-提供按需科研复现流程；`.codex/agents/*.toml` 定义专业 reviewer。
+提供按需通用科研任务流程（沿用 `research-reproduction` 名称）；`.codex/agents/*.toml` 定义专业 reviewer。
 从项目 Git 根目录启动新的 Codex 会话，并按客户端要求信任该项目。
 
 自定义 agent 使用 `name`、`description` 和 `developer_instructions`。

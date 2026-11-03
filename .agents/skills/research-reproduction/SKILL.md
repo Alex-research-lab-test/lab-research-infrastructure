@@ -1,36 +1,106 @@
 ---
 name: research-reproduction
-description: Use when planning, implementing or auditing a scientific reproduction, or maintaining research code, CI, dependencies, environments, Skills, agent configuration or research collaboration policy. Also use for documentation changes within these tasks to determine the appropriate review level.
+description: Use when a research request involves paper reproduction, custom-data training or adaptation, algorithm development, numerical simulation, data analysis, model evaluation or experiment failure analysis. Also use for research code, CI, dependencies, environments, Skills, agents and collaboration policy maintenance, including documentation changes.
 ---
 
-# Research reproduction
+# Research task execution
 
-Read the project's `AGENTS.md`, task and actual Git diff before choosing evidence,
-execution or review. Preserve local work, history, datasets and scientific
-acceptance criteria. Publication, hardware and unspecified training budgets need
-separate authorization. For collaboration maintenance, apply the review policy
-below without inventing a paper, dataset or experimental requirement.
+Read the project's `AGENTS.md`, task and actual Git diff. Preserve local work,
+history, datasets and scientific acceptance criteria. Keep this existing Skill
+name and native reviewer integration; do not build another agent framework.
+
+## Task Understanding
+
+Before implementation, establish a concise task record using the project's
+`docs/lab/templates/research-task.md` or central `templates/research-task.md`:
+
+1. Identify the research question, intended outcome and success/failure criteria.
+   Classify the goal as A official reproduction, B custom-data adaptation,
+   C algorithm development, D analysis/simulation, or collaboration maintenance.
+   Mixed goals may combine routes; failure diagnosis follows the relevant route
+   with evidence from failed runs, rather than automatically rerunning a demo.
+2. Inspect existing repository instructions, project docs, task/implementation
+   maps, data metadata and relevant experiment records first. Search the research
+   knowledge base before changing established architecture, interfaces, training,
+   robot control or experiment procedures. Account for documented failures.
+   Use targeted reads; do not load a whole vault or scan real datasets by default.
+3. Record supplied/accessible papers, code revisions, data versions and semantics,
+   experimental conditions, outputs, validation basis and execution permissions.
+   Mark irrelevant fields not applicable; a numerical or maintenance task does
+   not require an invented paper or official dataset. A source locator is not
+   evidence that its contents were read.
+4. Decide whether the information is sufficient for the next reliable step.
+   If sufficient, record READY and proceed without redundant questions. Missing
+   source access can be an evidence gap for later verification, not a reason to
+   ask the user to restate an already clear goal. A provisional plan must label
+   unverified reference values and cannot claim faithful results.
+
+### Necessary clarification, including during execution
+
+- If a missing or conflicting fact materially changes the technical plan,
+  scientific interpretation, success criteria or safety boundary, clarify before
+  the dependent operation. Do not choose the research goal, data meaning,
+  Action definition or evaluation standard on the user's behalf.
+- Search existing evidence first, then ask the most important 1–3 questions per
+  round, with concrete choices/examples when useful. Use the client's question
+  mechanism when available. Do not send a broad intake questionnaire or ask
+  questions already answered in the project/user materials.
+- For details that do not affect correctness, use reasonable defaults and record
+  each assumption, its rationale and scope. Never promote an unconfirmed critical
+  fact to a default. User-confirmed decisions and agent assumptions stay distinct.
+- Recheck when new evidence appears. If Action metadata or an evaluation protocol
+  contradicts an earlier agreement, pause affected conversion, implementation,
+  training/evaluation or claims; explain the conflict and ask again. Continue
+  independent safe work. A previous plan is not permission to guess new semantics.
+- In an unattended/non-interactive run, persist or return a task record with
+  status `NEEDS_USER_INPUT`, unresolved questions, evidence checked, blocked
+  operations and safe next work. Do not fabricate answers, wait indefinitely or
+  silently drop the questions. An interactive session also records unresolved
+  blockers; resume dependent work only after a reliable answer resolves them.
+- Track authorization separately from information sufficiency. A clear training
+  request does not authorize unspecified data access, compute budget, output
+  mutation, publication or hardware. Preserve existing authorizations; request
+  only missing permissions when a concrete dependent step needs them.
+
+## Select the research route
+
+| Route | Required basis and validation |
+| --- | --- |
+| A Official paper reproduction | Pin paper/version, upstream revision, official dataset/splits, experiment protocol and reference metrics. Map sections/equations to implementation; reproduce faithfully and label deviations. A clear request for official Push-T uses the official route, without asking the user to redesign it. |
+| B Custom-data adaptation | Understand structure, episode boundaries, Observation/Action shape and physical meaning, units/frames, timing/sample frequency, training goal and evaluation. Inspect how the existing code can consume these inputs; distinguish engineering adapters from algorithm changes. Never replace the user's data with official demo data by default. |
+| C Algorithm development | Establish baseline, improvement hypothesis, controlled comparisons, metrics and ablation plan. Preserve comparable splits, budgets and protocols; separate a tested implementation from evidence that the hypothesis improves results. |
+| D Analysis or numerical simulation | Establish inputs, analysis question, numerical/statistical method, result format and validation basis. Use appropriate analytic checks, synthetic cases, convergence/error or uncertainty analysis; do not force a training or official-demo workflow. |
+
+For model evaluation and failed experiments, inspect actual configs, versions,
+logs, metrics and resource conditions; separate observed failure from suspected
+cause and propose discriminating checks. Route by the research goal, not just
+keywords or repository name. Do not rerun expensive/unsafe work without authority.
+Project-specific scientific validation may differ across routes; GitHub PRs,
+Actions, Rulesets, reviews and reproducible records remain shared requirements.
 
 ## Research execution
 
-1. For research implementation, identify the paper version, DOI/arXiv, official
-   code revision, intended result and explicit adaptations. Read primary sources
-   and the paper-to-implementation map. If absent, use the project's
-   `docs/lab/templates/paper-implementation-map.md` or central
-   `templates/paper-implementation-map.md` at the adopted source commit. Report
-   unavailable evidence rather than guessing methods.
-2. Record baseline, environment, dataset/split, input/output semantics,
-   configuration and protocol when relevant. Search the research knowledge base
-   before changing established architecture, interfaces, training, robot control
-   or experiment procedures; account for documented failures.
-3. Make the smallest supported change on an isolated branch. Preserve unrelated
+1. Record the chosen route, evidence, baseline, environment, data/split and
+   input/output semantics, configuration and protocol when relevant. Use primary
+   sources and the paper-to-implementation map when a paper informs the work;
+   otherwise map requirements/methods to code and validation without inventing a
+   paper. Use the project's `docs/lab/templates/paper-implementation-map.md` or
+   central `templates/paper-implementation-map.md` at the adopted source commit.
+2. Make the smallest supported change on an isolated branch. Preserve unrelated
    work. Separate engineering adaptations from faithful reproduction claims and
    infrastructure from algorithm changes.
-4. Validate static checks and relevant CPU tests first. Run data/GPU/hardware
-   work only with authorized procedure, inputs, output location and budget.
-   Missing prerequisites remain explicit; continue independent work.
-5. Record actual commands, versions, seeds, outputs, metrics and limitations in
-   the experiment record when applicable. Never invent successful runs.
+3. Validate static checks and relevant CPU tests first, then the route's specific
+   scientific checks. Run data/GPU/hardware work only with authorized procedure,
+   inputs, output location and budget. Keep missing prerequisites explicit and
+   continue independent work; return to clarification if new ambiguity appears.
+4. Record actual commands, versions, seeds, outputs, metrics, failed attempts and
+   limitations in the experiment record when applicable. Never invent successful
+   runs or treat a plan as experiment results.
+
+Task type does not determine review level by itself. Apply the unchanged policy
+below to the goal, full diff and scientific risk at the current stage. Clarifying
+questions do not have to wait for reviewer approval; planned future reviews are
+not completed reviews. Formal scientific acceptance remains L2 on every route.
 
 ## Automatic review decision
 
