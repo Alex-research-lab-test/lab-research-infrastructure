@@ -61,3 +61,13 @@ CLI 0.166.0 实测受信任项目可直接发现 standalone TOML，不必为此�
 
 先运行本地检查和 actionlint，再核对暂存清单、来源 commit 和旧仓库基线。
 远程创建 Fork、推送和 PR 均遵守用户确认边界。
+
+## 分级审核同步
+
+`research-reproduction` 同时覆盖科研实现与协作配置维护，由主 Agent 根据任务、
+完整 diff 和科研风险选择审核等级。同步整个 Skill 目录及
+`templates/review-record.md` 到 `docs/lab/templates/review-record.md`，按项目合并
+`templates/project/AGENTS.md` 的 Review 段，保留已有项目约束和未合并工作。
+更新来源记录中的完整中央 commit；禁止用分支名代替版本。验收必须执行任务
+并检查实际原生调用，静态文件检查不能证明调度已发生。既有 PR 未合并时，
+同步分支基于该 PR head，并在发布说明中写明依赖关系，避免重复或覆盖修复。

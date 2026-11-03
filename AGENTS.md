@@ -29,6 +29,16 @@ consumer's core algorithm, upgrade its training environment, or execute hardware
   `python -m unittest discover -s tests -v` and actionlint against both workflows.
   Do not claim a remote check, model review or gate passed without its evidence.
 
+## Automatic review
+
+Use the central `research-reproduction` Skill for research collaboration
+maintenance as well as reproduction work. The main agent selects L0/L1/L2 from
+the task, actual diff and scientific risk: L0 format checks only, L1 native
+`code_reviewer`, L2 independent native scientific and code reviewers. Unknown
+scientific impact raises to L2. Record reasons, fixed SHA, native role/thread
+evidence, findings and resolution in `templates/review-record.md`. Unavailable
+roles or missing results mean incomplete review. Keep existing remote gates.
+
 ## Code Review Rules
 
 ### Research and data boundaries
