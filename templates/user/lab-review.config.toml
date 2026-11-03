@@ -1,0 +1,7 @@
+# Copy to ~/.codex/lab-review.config.toml and replace the project root below.
+# Activate only with: codex --profile lab-review --cd /absolute/path/to/project
+sandbox_mode = "read-only"
+approval_policy = "never"
+
+[projects."/absolute/path/to/project"]
+trust_level = "trusted"

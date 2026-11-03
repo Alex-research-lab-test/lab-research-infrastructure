@@ -21,6 +21,10 @@ consumer's core algorithm, upgrade its training environment, or execute hardware
   and unpublished research. Use an approved public Git author identity.
 - Native skill and reviewer sources live at the repository root. Do not maintain
   a second copy in `templates/project`; adoption copies the canonical files.
+- Native role discovery requires trust for the actual Git root in a fresh client
+  session. Never commit local trust paths or let project config grant itself trust.
+  Native invocation evidence must include agent_type, distinct thread IDs, role
+  bindings and actual results; task names alone are insufficient.
 - Verify with `pre-commit run --all-files --show-diff-on-failure`,
   `python -m unittest discover -s tests -v` and actionlint against both workflows.
   Do not claim a remote check, model review or gate passed without its evidence.

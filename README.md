@@ -22,6 +22,7 @@
 | `.agents/skills/research-reproduction/` | 科研复现 Skill 的唯一维护源 |
 | `.codex/agents/` | Scientific Reviewer 和 Code Reviewer 的唯一维护源 |
 | `templates/project/` | 项目级 AGENTS、CI 和检查配置 |
+| `templates/user/lab-review.config.toml` | 用户显式启用的只读审核 profile 示例；替换为实际 Git 根目录 |
 | `templates/*.md` | 研究任务、论文实现依据、实验记录 |
 | `.github/` | 本仓库 CI、Issue 和 PR 模板 |
 | `tools/check_codex.py` | 只解析 Codex 元数据的轻量检查 |
@@ -45,6 +46,10 @@ python -m unittest discover -s tests -v
 首次运行 pre-commit 会联网安装固定版本的检查工具。
 Actionlint 1.7.12 的版本和归档 SHA-256 在工作流中固定。
 CI 的预期 job 名为 `lab-ci`，启用合并规则前必须从真实运行确认其名称和来源 App。
+
+角色原生发现还要求客户端信任实际项目 Git 根目录。配置文件存在或静态检查
+通过不等于角色已经加载；已验证的 CLI 0.166.0 用法见
+[Codex 配置](docs/codex-setup.md) 和 [原生验收记录](docs/native-reviewer-acceptance.md)。
 
 ## 公开测试边界
 
