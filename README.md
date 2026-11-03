@@ -19,7 +19,7 @@
 | 路径 | 用途 |
 | --- | --- |
 | `AGENTS.md` | 本仓库操作与审核约束 |
-| `.agents/skills/research-reproduction/` | 科研复现 Skill 的唯一维护源 |
+| `.agents/skills/research-reproduction/` | 通用科研任务 Skill 的唯一维护源（沿用原名） |
 | `.codex/agents/` | Scientific Reviewer 和 Code Reviewer 的唯一维护源 |
 | `templates/project/` | 项目级 AGENTS、CI 和检查配置 |
 | `templates/user/lab-review.config.toml` | 用户显式启用的只读审核 profile 示例；替换为实际 Git 根目录 |

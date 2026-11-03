@@ -6,9 +6,10 @@
   Preserve local changes, Git history, datasets, checkpoints and experiment logs.
 - Before changing established architecture, interfaces, training or experiment
   procedures, search the available research knowledge base using targeted terms.
-- For paper implementation, use the `research-reproduction` skill, primary
-  sources and the paper-to-implementation map. Separate adaptations from claims
-  of faithful reproduction. Never fabricate citations, results or successful runs.
+- For research tasks, use `research-reproduction` for task understanding and
+  necessary clarification, then choose reproduction, custom data, development or
+  analysis. Use primary sources and the paper-to-implementation map when relevant.
+  Separate adaptations from faithful reproduction; never fabricate results.
 - Infrastructure-only tasks must not modify core algorithms or training defaults.
 
 ## Verification and execution
