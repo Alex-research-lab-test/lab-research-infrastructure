@@ -1,0 +1,158 @@
+{
+  "recorded_at_utc": "2026-11-03T09:39:49.793602+00:00",
+  "policy_source": "71eb0453ab9fbf46fe3ff982cde93238f6643ba6",
+  "evidence_kind": "Sanitized extracts of actual native collaboration calls and returned task messages in this Codex conversation; not an exported raw runtime log.",
+  "runtime_id_limit": "Tools expose canonical task IDs, not thread UUIDs. UUID and separate runtime role metadata are unavailable; no UUID has been inferred. Actual agent_type calls and completed native replies establish the observed role dispatch.",
+  "baseline": {
+    "driver": "/root/baseline_skill_task",
+    "base": "ce89a8aaccb298d2d259a86b3bef5dbef1c8e9ef",
+    "head": "cad9f9e848ac3e0066a9ee21d14c9add40b5ab9a",
+    "change": "collaboration.toml record_test_commands false to true",
+    "reviewer_calls": 0,
+    "result": "Old Skill did not require independent review for collaboration configuration."
+  },
+  "cases": {
+    "l0": {
+      "base": "0fa019f94f71e79d531355f9e73711619a7e963e",
+      "head": "be6c50b11d198883706de46470db5863af9cf079",
+      "policy_source": "71eb0453ab9fbf46fe3ff982cde93238f6643ba6",
+      "diff": "diff --git a/README.md b/README.md\nindex 8765820..2d879c9 100644\n--- a/README.md\n+++ b/README.md\n@@ -1,3 +1,3 @@\n # Synthetic collaboration task\n \n-This task records chek commands.\n+This task records check commands."
+    },
+    "l1": {
+      "base": "0fa019f94f71e79d531355f9e73711619a7e963e",
+      "head": "bce40a8e464777f69d01f8f8201b9ba8a419efb8",
+      "policy_source": "71eb0453ab9fbf46fe3ff982cde93238f6643ba6",
+      "diff": "diff --git a/collaboration.toml b/collaboration.toml\nindex a080b2f..ac5bd07 100644\n--- a/collaboration.toml\n+++ b/collaboration.toml\n@@ -1 +1 @@\n-record_test_commands = false\n+record_test_commands = true"
+    },
+    "l2": {
+      "base": "0fa019f94f71e79d531355f9e73711619a7e963e",
+      "head": "22051e29fb304d11230ac441eb7e26a3e959553f",
+      "policy_source": "71eb0453ab9fbf46fe3ff982cde93238f6643ba6",
+      "diff": "diff --git a/normalize.py b/normalize.py\nindex 9d8a316..6d90891 100644\n--- a/normalize.py\n+++ b/normalize.py\n@@ -1,2 +1,2 @@\n def normalize(value):\n-    return value / 255.0\n+    return 2.0 * value / 255.0 - 1.0\ndiff --git a/test_normalize.py b/test_normalize.py\nnew file mode 100644\nindex 0000000..313d2bc\n--- /dev/null\n+++ b/test_normalize.py\n@@ -0,0 +1,11 @@\n+import unittest\n+from normalize import normalize\n+\n+class NormalizeTests(unittest.TestCase):\n+    def test_interface_values(self):\n+        for value, expected in [(0, -1.0), (127.5, 0.0), (255, 1.0)]:\n+            with self.subTest(value=value):\n+                self.assertAlmostEqual(normalize(value), expected)\n+\n+if __name__ == \"__main__\":\n+    unittest.main()"
+    }
+  },
+  "executions": [
+    {
+      "level": "L0",
+      "driver": "/root/skill_task_l0",
+      "head": "be6c50b11d198883706de46470db5863af9cf079",
+      "reason": "README spelling only",
+      "calls": [],
+      "checks": [
+        "git diff --check BASE HEAD: exit 0",
+        "markdownlint-cli2 README.md: exit 0, 0 errors"
+      ],
+      "status": "completed; reviewers not applicable",
+      "limits": "Formatting only; initial direct cache-source invocation failed for missing globby, installed executable then passed."
+    },
+    {
+      "level": "L1",
+      "driver": "/root/skill_task_l1",
+      "head": "bce40a8e464777f69d01f8f8201b9ba8a419efb8",
+      "reason": "Collaboration configuration behavior",
+      "calls": [
+        {
+          "agent_type": "code_reviewer",
+          "fork_turns": "none",
+          "task_name": "l1_code_review",
+          "returned_task_id": "/root/skill_task_l1/l1_code_review",
+          "completed_result": "No actionable findings or unresolved questions. Reviewed full base/head diff, only collaboration.toml:1. Static review; config consumer not exercised."
+        }
+      ],
+      "status": "completed after execution-permission clarification; not the unassisted acceptance run",
+      "intervention": "Driver initially asked root to dispatch. Root clarified that the driver was task main and authorized to use its native tools; root did not supply a role or level."
+    },
+    {
+      "level": "L1",
+      "driver": "/root/skill_task_l1_unassisted",
+      "head": "bce40a8e464777f69d01f8f8201b9ba8a419efb8",
+      "reason": "Collaboration configuration behavior",
+      "calls": [
+        {
+          "agent_type": "code_reviewer",
+          "fork_turns": "none",
+          "task_name": "l1_code_review",
+          "returned_task_id": "/root/skill_task_l1_unassisted/l1_code_review",
+          "completed_result": "No actionable findings; independently confirmed TOML, diff check, patch hash and clean tracked/index state."
+        }
+      ],
+      "checks": [
+        "git diff --check BASE HEAD: exit 0",
+        "python -B standard-library tomllib: exact base/head dict assertions pass",
+        "git diff and cached diff: tracked clean"
+      ],
+      "diff_sha256": "29a6f61af2ca4da3778337b6ac5fe5b5dbb183091eb6e62d13451e75e5a69cad",
+      "status": "completed; unassisted acceptance",
+      "limits": "No configuration consumer in synthetic fixture; untracked case.json excluded."
+    },
+    {
+      "level": "L2",
+      "driver": "/root/skill_task_l2",
+      "head": "22051e29fb304d11230ac441eb7e26a3e959553f",
+      "reason": "Normalization formula/output semantics change",
+      "failed_calls": [
+        {
+          "agent_type": "scientific_reviewer",
+          "task_name": "l2_scientific",
+          "fork_turns": "none",
+          "error": "collab spawn failed: agent thread limit reached",
+          "result": "No thread/result; review remained incomplete"
+        },
+        {
+          "agent_type": "scientific_reviewer",
+          "task_name": "l2_scientific_retry",
+          "fork_turns": "none",
+          "error": "collab spawn failed: agent thread limit reached",
+          "result": "No thread/result; review remained incomplete"
+        }
+      ],
+      "calls": [
+        {
+          "agent_type": "code_reviewer",
+          "fork_turns": "none",
+          "task_name": "l2_code",
+          "returned_task_id": "/root/skill_task_l2/l2_code",
+          "completed_result": "No actionable code defects; formula and three boundary/midpoint cases match METHOD. Independently ran the CPU unittest successfully."
+        },
+        {
+          "agent_type": "scientific_reviewer",
+          "fork_turns": "none",
+          "task_name": "l2_scientific_final",
+          "returned_task_id": "/root/skill_task_l2/l2_scientific_final",
+          "completed_result": "No scientific-method findings. Initial missing CPU-output evidence was supplied by native followup_task; final supplementary reply states the evidence gap is resolved and specified acceptance evidence is sufficient. Did not run experiments."
+        }
+      ],
+      "independence": "Both successful calls were dispatched before collecting either conclusion, with same fixed base/head and METHOD, no peer findings. Capacity retry messages from root contained no role-selection guidance or peer findings.",
+      "checks": [
+        "PYTHONDONTWRITEBYTECODE=1 python -B -m unittest -v test_normalize: exit 0, 1 test, 3 subcases",
+        "git diff --check BASE HEAD: exit 0",
+        "tracked/index diff empty"
+      ],
+      "status": "completed after capacity retries and evidence completion",
+      "limits": "Only synthetic scalar [0,255] interface; no real dataset, training or paper reproduction acceptance."
+    }
+  ],
+  "implementation_review": {
+    "agent_type": "code_reviewer",
+    "fork_turns": "none",
+    "returned_task_id": "/root/implementation_code_review",
+    "central_base": "5254ceb1b4eff6c877da9dc5fad930a38399c16b",
+    "central_head": "71eb0453ab9fbf46fe3ff982cde93238f6643ba6",
+    "pilot_base": "8f914e93ac30b1d6e3b23800fea6a395e0c15507",
+    "pilot_head": "0fbf14c000c3d0c99da5709df47b366b26d09523",
+    "result": "No actionable findings. Matching Skill/template blob identities, exact source SHA, PR #3 ancestry and clean working trees confirmed. Static review only; fixture execution and remote state not independently inspected.",
+    "visible_binding": "Native agent_type=code_reviewer call and developer-provided read-only reviewer instructions; no runtime UUID exposed."
+  },
+  "unverified": [
+    "No deliberate unavailable-registered-role fault injection; actual capacity failure/retry path was observed.",
+    "No exported runtime UUID/metadata or raw nested trace available from this tool interface.",
+    "No future-session reliability guarantee or GitHub enforcement inferred.",
+    "No new remote CI, cloud review or human approval before publication."
+  ],
+  "publication": "Not authorized yet; do not push, create PR or merge.",
+  "driver_prompts_verbatim": {
+    "l0": "执行科研 Skill `/tmp/lab-auto-review-cases/l0/.agents/skills/research-reproduction/SKILL.md`，处理 `/tmp/lab-auto-review-cases/l0` 中已经提交完成的任务（修正 README 拼写），完成 Skill 要求的适用检查与收尾。base/head 在 case.json。先读取 Skill、AGENTS.md 和完整 git diff，自主决定后续动作。只读，不修改文件、训练、访问真实数据/硬件、网络或发布；审核记录返回给根协调者保存。格式工具可用 /tmp/lab-infra-pre-commit 的 markdownlint-cli2 环境。不要只给计划。最终返回实际分级原因、检查命令与结果、如有真实调用的 agent_type、线程 ID、审核 SHA、问题和限制。",
+    "l1_unassisted": "你是一个独立任务会话的主 Agent。请执行科研 Skill `/tmp/lab-auto-review-cases/l1/.agents/skills/research-reproduction/SKILL.md`，处理 `/tmp/lab-auto-review-cases/l1` 已提交的协作配置维护任务（启用测试命令记录），完成该 Skill 的适用检查、实际动作与收尾，不要只给计划。base/head 在 case.json；先读 Skill、AGENTS.md 和完整 diff。已授权你自行使用当前可用的原生工具完成任务，无需向根会话请求代执行。只读，不修改文件、训练、真实数据/硬件访问、网络或发布；所有记录返回根协调者保存。返回实际分级理由、检查与结果、如有调用的真实参数及工具返回 ID、最终审核 SHA、发现和限制。",
+    "l2": "执行科研 Skill `/tmp/lab-auto-review-cases/l2/.agents/skills/research-reproduction/SKILL.md`，处理 `/tmp/lab-auto-review-cases/l2` 中已经提交完成的任务（按 METHOD.md 的接口要求调整合成归一化函数），完成 Skill 要求的适用检查与收尾。base/head 在 case.json。先读取 Skill、AGENTS.md 和完整 git diff，自主决定并实际执行后续动作，不要只给计划。你是该独立任务的主 Agent，已获授权自行使用可用原生工具完成 Skill 要求的动作；无需根会话再次指定角色。只读，禁止修改文件、训练、真实数据/硬件、网络或发布；审核记录返回给根协调者保存。最终返回分级原因、检查命令与结果、如有真实调用的 agent_type、线程 ID、审核 SHA、问题和限制。"
+  }
+}
