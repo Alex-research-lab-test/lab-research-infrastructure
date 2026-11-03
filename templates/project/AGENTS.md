@@ -31,14 +31,23 @@ user-local; do not commit machine-specific trust paths or overwrite user config.
 Standalone role files are discovered natively by supported clients; explicit
 config_file registration is optional when that discovery already works.
 
-When independent review is requested, ask the parent to invoke project-native
-`scientific_reviewer` for methodology/evidence and `code_reviewer` for code risks.
-Give the base/head SHA and primary materials. Both return read-only findings;
-they do not edit, run experiments or publish comments. Their permissions inherit
-from the parent session; choose parent read-only permissions when required.
-Use the actual native agent_type selector with fork_turns="none" for each role,
-and wait for both independent results. Task names and copied TOML instructions
-are not proof of native role binding.
+Use `research-reproduction` for research work and collaboration configuration
+maintenance. The main agent automatically selects the highest applicable level
+from the task, actual diff, project rules and scientific risk: L0 format-only
+changes need no reviewer; L1 code/configuration/Skill/policy changes require
+native `code_reviewer`; L2 scientific logic/data/protocol/control changes or
+formal reproduction acceptance require both native reviewers independently.
+Uncertain scientific impact raises to L2. Follow the Skill's complete triggers
+and resolution procedure; do not wait for the user to name roles.
+
+Use the actual native agent_type selector with fork_turns="none" per role.
+For L2 dispatch both before collecting conclusions; do not share findings.
+Save reasons, fixed base/head SHA, scope, actual role/thread binding, findings,
+tests and remaining risks in `docs/lab/templates/review-record.md`. Missing roles
+or results mean incomplete review. Re-review material fixes and check final
+content coverage before PR preparation or formal experiments. Reviewers are
+read-only and inherit parent permissions. AI review is not a GitHub gate or
+proof of scientific correctness and does not replace existing approvals.
 
 ## Code Review Rules
 
