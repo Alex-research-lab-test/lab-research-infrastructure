@@ -7,6 +7,36 @@
 `AGENTS.md`、Skills、Subagents 和 GitHub Code Review 辅助研究实现与审核。
 当前仓库提供配置和可执行检查；实际远程部署与验收状态以验证记录为准。
 
+## 单独下载或安装 Skill
+
+在终端执行以下命令。第一行列出仓库中匹配的 Skill，第二行仅安装
+`research-reproduction` 到 `~/.agents/skills/research-reproduction/`。
+安装后新开 Codex 会话，输入 `$research-reproduction` 即可选择它。
+
+```bash
+npx skills@1.7.6 add https://github.com/Alex-research-lab-test/lab-research-infrastructure --skill research-reproduction -a codex --list
+npx skills@1.7.6 add https://github.com/Alex-research-lab-test/lab-research-infrastructure --skill research-reproduction -g -a codex --copy
+```
+
+先检查已有个人 Skill；第三方安装器可能覆盖原文件，不对含个人修改的目录
+盲目重复安装。也可用 Codex 自带 `$skill-installer` 指定本仓库的
+`.agents/skills/research-reproduction` 路径和固定 commit。
+
+### 只导出 Skill 文件
+
+如果已经有中央仓库的本地副本（包括从 Git bundle 克隆的副本），可以只导出
+完整 Skill 目录。进入该仓库根目录，在所需的版本上运行：
+
+```bash
+skill_export="$(mktemp -d)"
+git archive HEAD:.agents/skills/research-reproduction | tar -x -C "$skill_export"
+printf 'Skill 已导出到 %s\n' "$skill_export"
+```
+
+导出的目录包含 `SKILL.md` 及该版本随附的资源。可以将整个目录发给其他成员。
+
+上述命令只安装 Skill。需要两个原生 Reviewer 时，按 [Codex 配置说明](docs/codex-setup.md) 接入并验证。
+
 ## 从这里开始
 
 1. 阅读 [协作流程](docs/github-collaboration.md) 和 [贡献约定](CONTRIBUTING.md)。
